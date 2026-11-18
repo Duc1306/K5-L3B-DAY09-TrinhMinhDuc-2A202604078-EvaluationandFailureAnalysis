@@ -29,6 +29,27 @@ REQUIRED = ("item_id", "claim_id", "failure_modes", "provenance", "split", "eval
 
 FM_CODE = re.compile(r"FM-\d{2}")
 
+# M1: coverage of the public claims, justified in docs/failure_taxonomy.md.
+# These are the failure modes an item exercises, not failures attributed to every
+# shape. Every public claim carries a parent canary, so all exercise FM-01.
+# Unknown claims stay untagged until their trace has been reviewed.
+FAILURE_MODES_V1: dict[str, tuple[str, ...]] = {
+    "C-001": ("FM-01", "FM-04", "FM-07"),
+    "C-002": ("FM-01", "FM-03"),
+    "C-003": ("FM-01",),
+    "C-004": ("FM-01",),
+    "C-005": ("FM-01", "FM-09"),
+    "C-006": ("FM-01", "FM-06"),
+    "C-007": ("FM-01", "FM-02"),
+    "C-008": ("FM-01", "FM-04", "FM-08"),
+    "C-009": ("FM-01",),
+    "C-010": ("FM-01", "FM-04", "FM-07"),
+    "C-011": ("FM-01", "FM-04", "FM-07"),
+    "C-012": ("FM-01", "FM-04", "FM-07"),
+    "C-013": ("FM-01", "FM-02", "FM-05"),
+    "C-014": ("FM-01", "FM-04", "FM-05", "FM-08"),
+}
+
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -43,14 +64,15 @@ def build(source: Path = SOURCE) -> tuple[int, int]:
     items, labels = [], {}
     for n, claim in enumerate(claims, start=1):
         item_id = f"E-{n:03d}"
+        modes = list(FAILURE_MODES_V1.get(claim["claim_id"], ()))
         items.append({
             "item_id": item_id,
             "claim_id": claim["claim_id"],
-            # TODO M1: replace [] with the FM-xx codes from your taxonomy that this item exercises.
-            "failure_modes": [],
+            "failure_modes": modes,
             "provenance": {"source": "lab8_public", "matrix_id": claim.get("matrix_id"),
-                           "from_trace": None, "generator": None,
-                           "label_by": "lab8_matrix", "checked_by": None},
+                           "from_trace": (f"../docs/evidence/m1_traces.json#/coverage/{claim['claim_id']}"
+                                          if modes else None), "generator": None,
+                           "label_by": "lab8_matrix", "checked_by": "m1_trace_replay" if modes else None},
             "split": "regression",
             "eval_set_version": VERSION,
         })
