@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 from lab8.console import utf8_stdio
@@ -44,8 +45,51 @@ def slice_check(pr: dict, base: dict, spec: dict) -> tuple[list[str], list[str]]
       - fail if below "min", or if no_significant_drop and the paired CI over the slice's items
         lies entirely below 0
     Return (blocked ids like "slice:money_movement/pass_rate", report lines)."""
-    # TODO M5
-    return [], []
+    blocked, lines = [], []
+    bs = spec.get("bootstrap", {})
+    for rule in spec.get("slices", []):
+        name, metric = rule["name"], rule["metric"]
+        identifier = f"slice:{name}/{metric}"
+
+        def values(report):
+            rows = [r for r in report["rows"] if name in (r.get("slices") or [])]
+            if not rows:
+                return {}, "no rows in slice"
+            if any(not isinstance(r.get(metric), (int, float)) or not math.isfinite(r[metric]) for r in rows):
+                return {}, "missing or non-finite slice metric"
+            return per_item(report, metric, slice_name=name), None
+
+        candidate, error = values(pr)
+        value = sum(candidate.values()) / len(candidate) if candidate else None
+        verdict = "missing" if error else "ok"
+        notes = [error] if error else []
+        if value is not None and "min" in rule and value < rule["min"]:
+            verdict = "fail"
+        if rule.get("no_significant_drop") and candidate:
+            baseline, error = values(base)
+            if error or candidate.keys() != baseline.keys():
+                verdict = "missing"
+                notes.append(error or "slice item set differs from baseline")
+            elif len(candidate) < 2:
+                verdict = "missing"
+                notes.append("paired CI needs at least two slice items")
+            else:
+                keys = sorted(candidate)
+                difference, low, high = stats.paired_bootstrap(
+                    [candidate[key] for key in keys], [baseline[key] for key in keys],
+                    n_resamples=bs.get("n_resamples", 1000), rng=bs.get("rng", 2027),
+                    confidence=bs.get("confidence", 0.95))
+                notes.append(f"Δ {difference:+.3f} CI [{low:+.3f}, {high:+.3f}]")
+                if high < 0:
+                    verdict = "fail"
+        if verdict != "ok" and rule.get("blocking"):
+            blocked.append(identifier)
+        label = "ok" if verdict == "ok" else ("BLOCK" if rule.get("blocking") else "warn")
+        if verdict == "missing":
+            notes.append("MISSING")
+        lines.append(f"  {identifier:<32} {value!s:<8} min={rule.get('min', '-')!s:<5} "
+                     f"{' ; '.join(notes):<35} {label}")
+    return blocked, lines
 
 
 def check(pr: dict, base: dict, spec: dict, base_spec: dict | None = None) -> tuple[list[str], list[str]]:

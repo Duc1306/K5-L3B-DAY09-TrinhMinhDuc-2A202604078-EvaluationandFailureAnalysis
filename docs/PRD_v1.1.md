@@ -112,3 +112,24 @@ GitHub Actions thực tế vẫn cần commit/push và PR `starter/d09` → `mai
 |---|---|---|
 | Product / tác giả bài cá nhân | Trịnh Minh Đức | Bản đề xuất ngày 2026-11-18, chờ review PR |
 | Eval owner (giữ gate) | Trịnh Minh Đức | Đã kiểm tra Core local; chưa thay cho phê duyệt merge trên GitHub |
+
+## Bổ sung M5 — Đánh giá theo nhóm trên v2
+
+Core đã merge vào `main`; nhánh `advanced/m5` bổ sung eval set v2 với 28 item,
+SHA `5fa347e61392`, spec v2.2 và 5 seed cố định. V1 và baseline Core giữ nguyên.
+Nhãn tách riêng, toàn bộ adversarial pack được giữ lại, mỗi FM bị tấn công có
+ít nhất 3 item tính cả v1.
+
+Ba slice `money_movement`, `adversarial`, `denial` có sàn pass_rate 0.90,
+blocking và không giảm có ý nghĩa theo paired CI. Tag được xác định từ nhãn,
+không từ câu trả lời của agent. V2 kế thừa ngưỡng toàn cục riêng của bản v2;
+không thay đổi ngưỡng v1 khi mở rộng dataset.
+
+Report `E-slice_regression-20261118-5fa3` đạt 0.9357 toàn bộ nhưng chỉ 0.8500
+ở nhóm tiền, nên bị chặn duy nhất tại `slice:money_movement/pass_rate`.
+`fixed` và `honest_refactor` đều 140/140 PASS và được cho qua. Kết quả, trace
+và quy tắc lấy trung bình theo item nằm trong [báo cáo M5](m5_evalset_and_slices.md).
+
+Đây là mốc M5 đã kiểm tra local với 104 test Core + M5 trên hai phiên bản Python.
+M6 và M7 vẫn cần hoàn thành trước khi merge nhánh nâng cao vì workflow v2 kiểm
+chung các mốc đó. Chưa chốt ngưỡng pass_hat_5 hoặc tuyên bố gate chống mọi trap.
