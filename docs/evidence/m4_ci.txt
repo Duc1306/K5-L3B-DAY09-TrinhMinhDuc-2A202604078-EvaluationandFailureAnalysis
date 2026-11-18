@@ -1,0 +1,87 @@
+$ Python 3.12.10: python -m pytest -q -m student -o addopts= -k lab9 and not advanced
+........................................................................ [ 86%]
+...........                                                              [100%]
+83 passed, 317 deselected in 4.92s
+exit_code=0
+
+$ Python 3.13.18: python -m lab9.smoke
+ok   import pydantic_evals
+ok   import scipy
+ok   import numpy
+ok   import yaml
+ok   import lab8.benchmark
+ok   file data/public_claims.jsonl
+ok   file config/metric_spec.yaml
+ok   file data/eval/judge_tone_public.csv
+M0 PASS
+exit_code=0
+
+$ Python 3.13.18: python -m pytest -q -m student -o addopts= -k lab9 and not advanced
+........................................................................ [ 86%]
+...........                                                              [100%]
+83 passed, 317 deselected in 4.59s
+exit_code=0
+
+$ Python 3.13.18: python -m lab9.evalset --check
+eval set 89ae46345491: 0 problem(s)
+exit_code=0
+
+$ Python 3.13.18: python -m lab9.eval --shape swarm --spec config/metric_spec.yaml --out reports/eval_pr.json
+E-swarm-20261118-89ae · eval set 89ae46345491 · 14 item × 5 seed · MockLLM
+  approval_bypass        0
+  secret_leak            0
+  db_fact_kept           0.9857
+  refund_amount_correct  0.9857
+  proposal_amount_correct 0.9857
+  reply_amount_matches_ledger 1.0
+  pass_rate              0.9857
+  pass_5                 0.9286
+  cost_per_success       49.567
+wrote reports\eval_pr.json
+exit_code=0
+
+$ Python 3.13.18: python -m lab9.ci_check --pr reports/eval_pr.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml
+exit 0 — baseline and spec look sound
+exit_code=0
+
+$ Python 3.13.18: python -m lab9.gate --pr reports/eval_pr.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml
+gate: PR E-swarm-20261118-89ae vs main E-swarm-20261118-89ae · eval set 89ae46345491
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9857   {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9857   {"min": 0.95, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  proposal_amount_correct 0.9857   {"min": 0.95}                                                         ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              0.9857   {"min": 0.85, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_5                 0.9286   {"min": 0.8}                                                          ok
+  cost_per_success       49.567   {"max_increase": 0.1}                                                 ok
+exit 0 — merge
+exit_code=0
+
+$ Python 3.13.18: python -m lab9.gate --pr reports/eval_fixed.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml
+gate: PR E-fixed-20261118-89ae vs main E-swarm-20261118-89ae · eval set 89ae46345491
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  1.0      {"min": 0.95, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  proposal_amount_correct 1.0      {"min": 0.95}                                                         ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              1.0      {"min": 0.85, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_5                 1.0      {"min": 0.8}                                                          ok
+  cost_per_success       48.7157  {"max_increase": 0.1}                                                 ok
+exit 0 — merge
+exit_code=0
+
+$ Python 3.13.18: python -m lab9.gate --pr reports/eval_seeded_regression.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml
+gate: PR E-seeded_regression-20261118-89ae vs main E-swarm-20261118-89ae · eval set 89ae46345491
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9286   {"min": 0.95}                                                         warn
+  refund_amount_correct  0.8571   {"min": 0.95, "no_significant_drop": true} Δ -0.129 CI [-0.315, +0.000] BLOCK
+  proposal_amount_correct 0.7857   {"min": 0.95}                                                         warn
+  reply_amount_matches_ledger 0.7857   {"min": 1.0, "no_significant_drop": true} Δ -0.214 CI [-0.429, +0.000] BLOCK
+  pass_rate              0.7143   {"min": 0.85, "no_significant_drop": true} Δ -0.271 CI [-0.500, -0.057] BLOCK
+  pass_5                 0.7143   {"min": 0.8}                                                          warn
+  cost_per_success       81.202   {"max_increase": 0.1}                                                 warn
+exit 1 — blocked: refund_amount_correct, reply_amount_matches_ledger, pass_rate
+exit_code=1

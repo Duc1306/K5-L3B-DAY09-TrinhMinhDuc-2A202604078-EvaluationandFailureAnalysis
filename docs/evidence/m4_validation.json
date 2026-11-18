@@ -1,0 +1,251 @@
+{
+  "commands": [
+    {
+      "command": "Python 3.12.10: python -m pytest -q -m student -o addopts= -k lab9 and not advanced",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 3.13.18: python -m lab9.smoke",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 3.13.18: python -m pytest -q -m student -o addopts= -k lab9 and not advanced",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 3.13.18: python -m lab9.evalset --check",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 3.13.18: python -m lab9.eval --shape swarm --spec config/metric_spec.yaml --out reports/eval_pr.json",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 3.13.18: python -m lab9.ci_check --pr reports/eval_pr.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 3.13.18: python -m lab9.gate --pr reports/eval_pr.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 3.13.18: python -m lab9.gate --pr reports/eval_fixed.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 3.13.18: python -m lab9.gate --pr reports/eval_seeded_regression.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml",
+      "exit_code": 1
+    }
+  ],
+  "core_tests": "........................................................................ [ 86%]\n...........                                                              [100%]\n83 passed, 317 deselected in 4.59s",
+  "core_tests_python312": "........................................................................ [ 86%]\n...........                                                              [100%]\n83 passed, 317 deselected in 4.92s",
+  "eval_items_and_labels_match_committed_content": true,
+  "git_preserves_eval_and_report_bytes": true,
+  "packages": {
+    "numpy": "2.5.5",
+    "pydantic-evals": "2.68.0",
+    "scipy": "1.18.1"
+  },
+  "paired_ci": {
+    "eval_fixed": {
+      "pass_rate": {
+        "delta": 0.014285714285714235,
+        "high": 0.042857142857142816,
+        "low": 0.0
+      },
+      "refund_amount_correct": {
+        "delta": 0.014285714285714235,
+        "high": 0.042857142857142816,
+        "low": 0.0
+      },
+      "reply_amount_matches_ledger": {
+        "delta": 0.0,
+        "high": 0.0,
+        "low": 0.0
+      }
+    },
+    "eval_pr": {
+      "pass_rate": {
+        "delta": 0.0,
+        "high": 0.0,
+        "low": 0.0
+      },
+      "refund_amount_correct": {
+        "delta": 0.0,
+        "high": 0.0,
+        "low": 0.0
+      },
+      "reply_amount_matches_ledger": {
+        "delta": 0.0,
+        "high": 0.0,
+        "low": 0.0
+      }
+    },
+    "eval_seeded_regression": {
+      "pass_rate": {
+        "delta": -0.27142857142857146,
+        "high": -0.05714285714285716,
+        "low": -0.5
+      },
+      "refund_amount_correct": {
+        "delta": -0.12857142857142867,
+        "high": 0.0,
+        "low": -0.3146428571428569
+      },
+      "reply_amount_matches_ledger": {
+        "delta": -0.2142857142857143,
+        "high": 0.0,
+        "low": -0.4285714285714286
+      }
+    }
+  },
+  "python": "3.13.18",
+  "reference_pass_rate_within_0_01": true,
+  "reports": {
+    "baseline_v1": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v1.jsonl",
+        "eval_set_sha": "89ae46345491",
+        "items": 14,
+        "llm": "MockLLM",
+        "metric_spec_version": "1.1",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 49.567,
+        "db_fact_kept": 0.9857,
+        "pass_5": 0.9286,
+        "pass_rate": 0.9857,
+        "proposal_amount_correct": 0.9857,
+        "refund_amount_correct": 0.9857,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/baseline_v1.json",
+      "rows": 70,
+      "run_id": "E-swarm-20261118-89ae",
+      "sha12": "fea4ba820c4b"
+    },
+    "eval_fixed": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v1.jsonl",
+        "eval_set_sha": "89ae46345491",
+        "items": 14,
+        "llm": "MockLLM",
+        "metric_spec_version": "1.1",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 48.7157,
+        "db_fact_kept": 1.0,
+        "pass_5": 1.0,
+        "pass_rate": 1.0,
+        "proposal_amount_correct": 1.0,
+        "refund_amount_correct": 1.0,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_fixed.json",
+      "rows": 70,
+      "run_id": "E-fixed-20261118-89ae",
+      "sha12": "28ae830438d4"
+    },
+    "eval_pr": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v1.jsonl",
+        "eval_set_sha": "89ae46345491",
+        "items": 14,
+        "llm": "MockLLM",
+        "metric_spec_version": "1.1",
+        "python": "3.13.18",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 49.567,
+        "db_fact_kept": 0.9857,
+        "pass_5": 0.9286,
+        "pass_rate": 0.9857,
+        "proposal_amount_correct": 0.9857,
+        "refund_amount_correct": 0.9857,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_pr.json",
+      "rows": 70,
+      "run_id": "E-swarm-20261118-89ae",
+      "sha12": "88938cdfa4c2"
+    },
+    "eval_seeded_regression": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v1.jsonl",
+        "eval_set_sha": "89ae46345491",
+        "items": 14,
+        "llm": "MockLLM",
+        "metric_spec_version": "1.1",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 81.202,
+        "db_fact_kept": 0.9286,
+        "pass_5": 0.7143,
+        "pass_rate": 0.7143,
+        "proposal_amount_correct": 0.7857,
+        "refund_amount_correct": 0.8571,
+        "reply_amount_matches_ledger": 0.7857,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_seeded_regression.json",
+      "rows": 70,
+      "run_id": "E-seeded_regression-20261118-89ae",
+      "sha12": "42406b199160"
+    }
+  },
+  "source_hash_newlines": "LF",
+  "source_parent_commit": "642104c222f0a3dd94f0c9e8c2aea58346fe76cc",
+  "source_sha12": {
+    "../.gitattributes": "8b81111d56e8",
+    "config/metric_spec.yaml": "5a7eabfdb95d",
+    "harness_map.yaml": "44e663796dc0",
+    "lab9/eval.py": "cfd678349961",
+    "lab9/evalset.py": "63d79c32b6a9",
+    "lab9/gate.py": "0938ac0e85e2",
+    "lab9/graders.py": "4ecfcb26bdff",
+    "lab9/stats.py": "c1a6612a9328"
+  },
+  "source_working_tree_has_m4_changes": true
+}

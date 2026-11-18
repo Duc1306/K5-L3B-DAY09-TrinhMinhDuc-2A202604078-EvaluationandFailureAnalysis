@@ -92,5 +92,7 @@ Chạy từ `src`:
 .\.venv\Scripts\python.exe -m pytest -q -m student -o addopts= -k "lab9 and not advanced and not paired_bootstrap"
 ```
 
-Hai test `paired_bootstrap` vẫn thuộc M4. Baseline, paired CI và quyết định gate
-sẽ được hoàn thiện ở M4; report đối chứng này không được dùng thay baseline `swarm`.
+Lệnh trên giữ cách kiểm tra riêng đến M3. M4 hiện đã hoàn thiện bootstrap, baseline
+và quyết định gate; xem [eval_card.md](eval_card.md). Khi kiểm tra toàn bộ Core,
+bỏ `and not paired_bootstrap` khỏi bộ lọc. Report đối chứng này không được dùng
+thay baseline `swarm`.
