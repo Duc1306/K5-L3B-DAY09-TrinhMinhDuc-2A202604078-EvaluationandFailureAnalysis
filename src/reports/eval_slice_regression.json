@@ -14,7 +14,7 @@
     ],
     "metric_spec_version": "2.3",
     "llm": "MockLLM",
-    "python": "3.12.10"
+    "python": "3.13.18"
   },
   "rows": [
     {

@@ -2,7 +2,8 @@
 
 > v1.1 bổ sung tiêu chí đánh giá và cổng release cho bài cá nhân của Trịnh Minh Đức.
 > Số liệu lấy từ report do script sinh, được dẫn theo run ID trong [eval card](eval_card.md).
-> Trạng thái: đã kiểm tra Core local, chờ review PR và GitHub Actions thực tế.
+> Trạng thái: Core và M5–M7 đã kiểm tra local, chờ review PR và GitHub Actions của M7.
+> Các mục Core giữ snapshot M4; cập nhật hiện hành ở phần bổ sung M7 cuối tài liệu.
 
 ## 1. Thay đổi so với v1.0
 | Mục | v1.0 | v1.1 |
@@ -96,7 +97,7 @@ GitHub Actions thực tế vẫn cần commit/push và PR `starter/d09` → `mai
 - [ ] Judge replay trên CSV đã công khai, chưa có tập held-out mới.
 - [ ] Metric reply giới hạn format VND/khẳng định hoàn tất, không kiểm đầy đủ tiền viết bằng chữ hoặc reply bị thiếu.
 - [ ] `swarm` không phát reply; điểm reply 1.0 là không áp dụng, không phải bằng chứng chất lượng reply.
-- [ ] Slice gate, pass@k/pass^k và integrity/ratchet M5–M7 chưa cài; chưa tuyên bố bảo vệ trước trap ẩn.
+- [x] Slice gate, pass@k/pass^k và integrity/ratchet M5–M7 đã bổ sung sau Core; xem phần M7. Chưa chạy bộ chấm ẩn.
 - [ ] Cần chạy GitHub Actions trên PR thật trước khi merge.
 
 ## 7. Khi nào lên v1.2
@@ -151,6 +152,26 @@ nhiễu bằng 0 trên LLM thật. Cần nhiều A/A độc lập và nhãn held
 [Báo cáo M6](m6_reliability_and_noise.md) dẫn report, log và vector test minh họa
 vì sao cần cả chất lượng trung bình lẫn độ ổn định.
 
-Đã có **131 test đến M6 PASS** trên Python 3.12/3.13. Full advanced hiện còn hai
+Đã có **131 test đến M6 PASS** trên Python 3.12/3.13. Tại snapshot M6, full advanced còn hai
 test integrity của M7 thất bại; chưa merge nhánh nâng cao hoặc tuyên bố chống
 report/spec bị làm đẹp trước khi hoàn thành M7 và GitHub CI thực tế xanh.
+
+## Bổ sung M7 — Bằng chứng hợp lệ trước quyết định release
+
+Gate đã kiểm tra toàn vẹn cả report PR và baseline trước khi xét ngưỡng:
+đủ cặp item/seed, không trùng dòng, không thiếu grader hoặc có evaluator failure,
+không NaN/Infinity, summary phải khớp dòng, slice không bị đổi để che regression.
+Với spec tham chiếu qua `--base-spec`, cùng eval-set version chỉ được giữ hoặc
+siết điều kiện; không bỏ metric/slice, blocking hoặc paired CI.
+
+Spec v2.3 và dữ liệu giữ nguyên. Local đạt **194 test** trên cả Python 3.12/3.13,
+**111 test advanced** trên Python 3.13, **4/4 trap bị chặn**, mutation **3/3,
+0 báo nhầm**. Baseline tự so, fixed và honest_refactor đều được cho qua.
+[Báo cáo M7](m7_integrity_and_ratchet.md) chứa log, report, hash và bốn kết luận
+gate exit 1 dùng trong PR; A/A và căn cứ sàn 0.80 giữ kết quả M6.
+
+Điều kiện release: commit cả report/trap sinh bằng script, push nhánh nâng cao,
+mở PR về `main` trong fork, chỉ merge khi hai job `eval-gate`/`eval-gate-v2`
+thực tế xanh. Chưa quan sát CI của commit M7. Khi vận hành phải dùng baseline
+và `--base-spec` đã được review/bảo vệ; workflow lab chưa tự lấy spec từ main.
+Không tuyên bố phát hiện mọi bằng chứng bị làm giả đồng bộ hoặc mọi trap ẩn.

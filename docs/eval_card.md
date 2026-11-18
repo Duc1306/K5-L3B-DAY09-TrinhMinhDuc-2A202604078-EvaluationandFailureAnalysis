@@ -3,6 +3,9 @@
 Ngày đo: **2026-11-18**. Eval owner: **Trịnh Minh Đức**, người làm bài cá nhân.
 Phạm vi: mô phỏng offline và CI; chưa có pilot trên khách hàng thật.
 
+Các mục Core dưới đây giữ snapshot M4. Kết quả hiện hành đến M7 nằm trong
+các mục bổ sung cuối trang và [báo cáo M7](m7_integrity_and_ratchet.md).
+
 ## Phiên bản và provenance
 
 - Code: thay đổi M4 trong commit chứa card này, dựa trên parent `642104c` (M3).
@@ -177,6 +180,32 @@ spec tăng lên **v2.3**, thêm **pass_hat_5 ≥ 0.80, blocking**, giữ nguyên
   Full advanced còn **2 lỗi M7**, với 48 test PASS; xem [log](evidence/m6_tests.txt).
 
 Snapshot M5 và số liệu null của mốc đó được giữ theo commit `8e17653`.
-**Hiện chỉ còn M7:** integrity/ratchet và trap chưa hoàn thiện; CI advanced chưa
+**Tại snapshot M6 chỉ còn M7:** integrity/ratchet và trap chưa hoàn thiện; CI advanced chưa
 xanh dù các variant trung thực đã cho kết quả đúng. Với LLM thật cần A/A lặp lại
 để ước lượng nhiễu, và vẫn không hạ sàn để cố bắt lỗi hiếm bằng một cỡ mẫu nhỏ.
+
+## M7 — Integrity, ratchet và kết quả cuối local
+
+`integrity_check` đã hoàn thiện: kiểm manifest và toàn bộ cặp item/seed, dòng
+trùng, grader thiếu/không hữu hạn, evaluator failure kể cả khi điểm tổng hợp
+xanh, summary không khớp dòng, và thay tag slice. Metric tổng hợp như pass_hat_5
+được tính lại từ pass_rate, không yêu cầu có trong từng dòng.
+
+Ratchet với `--base-spec` giữ metric/slice, blocking, sàn/trần, max_increase,
+paired CI và nghĩa grader trên cùng eval-set version. Spec vẫn v2.3; không đổi
+ngưỡng, item, nhãn hoặc seed để đạt phép kiểm tra.
+
+- **194 test Lab 9 PASS** trên Python 3.12.10 và 3.13.18; **111 test advanced PASS**
+  trên Python 3.13.18. Hai lỗi M7 trong snapshot M6 đã hết.
+- **4/4 trap công khai** bị CLI gate chặn bằng **exit 1, INTEGRITY/ratchet**.
+  Hai tình huống gợi ý trong checkpoint — dòng trùng và evaluator failure trên
+  report xanh — có test riêng, không tuyên bố đó là kết quả bộ chấm ẩn.
+- Mutation fresh **3/3, 0 báo nhầm**; baseline tự so, fixed và honest_refactor
+  đều qua gate. Fresh swarm khớp metric baseline v2, Core cũng qua kiểm tra local.
+- [Trap log](evidence/m7_traps.txt), [mutation](evidence/m7_mutation.txt),
+  [test](evidence/m7_tests.txt), [hash và kết quả từng lệnh](evidence/m7_validation.json).
+
+[Báo cáo M7](m7_integrity_and_ratchet.md) có lệnh tái lập và nội dung dùng cho PR.
+Ratchet phụ thuộc spec tham chiếu đáng tin; workflow lab không tự lấy spec từ
+main. Không coi kiểm tra nhất quán là cơ chế xác thực mọi bằng chứng bị thay
+đồng bộ. M5–M7 đã kiểm tra local; vẫn đợi GitHub Actions thật trước khi merge.
