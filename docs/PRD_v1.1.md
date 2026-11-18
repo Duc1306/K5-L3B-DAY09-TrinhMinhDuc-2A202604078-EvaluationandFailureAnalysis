@@ -133,3 +133,24 @@ và quy tắc lấy trung bình theo item nằm trong [báo cáo M5](m5_evalset_
 Đây là mốc M5 đã kiểm tra local với 104 test Core + M5 trên hai phiên bản Python.
 M6 và M7 vẫn cần hoàn thành trước khi merge nhánh nâng cao vì workflow v2 kiểm
 chung các mốc đó. Chưa chốt ngưỡng pass_hat_5 hoặc tuyên bố gate chống mọi trap.
+
+## Bổ sung M6 — Tiêu chí độ ổn định
+
+Trạng thái M5 ở trên được giữ như snapshot. M6 đã hoàn thành cục bộ với spec v2.3:
+thêm `pass_hat_5` là capability/outcome metric blocking, sàn **0.80**, tính sau
+toàn bộ trial từ các giá trị `pass_rate` theo từng item. Không đổi eval set, nhãn,
+seed chuẩn, các ngưỡng cũ hoặc policy/agent.
+
+A/A hai bộ seed cho Δ = 0 ở mọi metric; reliability baseline **0.8929** cao hơn
+sàn **0.0929**. Đây là căn cứ chọn sàn cho mô phỏng hiện tại, chưa chứng minh dải
+nhiễu bằng 0 trên LLM thật. Cần nhiều A/A độc lập và nhãn held-out trước pilot thật.
+
+`E-flaky_regression-20261118-5fa3`, spec v2.3, có pass_rate **0.9143**, pass@5
+**1.0000**, pass^5 **0.5714** và bị chặn ở `pass_hat_5` cùng các điều kiện khác.
+`fixed`/`honest_refactor` vẫn được cho qua, mutation đạt **3/3, 0 báo nhầm**.
+[Báo cáo M6](m6_reliability_and_noise.md) dẫn report, log và vector test minh họa
+vì sao cần cả chất lượng trung bình lẫn độ ổn định.
+
+Đã có **131 test đến M6 PASS** trên Python 3.12/3.13. Full advanced hiện còn hai
+test integrity của M7 thất bại; chưa merge nhánh nâng cao hoặc tuyên bố chống
+report/spec bị làm đẹp trước khi hoàn thành M7 và GitHub CI thực tế xanh.

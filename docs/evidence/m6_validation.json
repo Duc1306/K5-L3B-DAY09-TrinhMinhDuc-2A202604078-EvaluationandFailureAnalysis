@@ -1,0 +1,353 @@
+{
+  "aa_record": "docs/evidence/m6_aa.json",
+  "absolute_baseline_headroom": 0.09289999999999998,
+  "baseline_pass_hat_5": 0.8929,
+  "decisions": {
+    "fixed": {
+      "blocked": [],
+      "exit_code": 0
+    },
+    "flaky_regression": {
+      "blocked": [
+        "pass_rate",
+        "pass_hat_5",
+        "slice:money_movement/pass_rate"
+      ],
+      "exit_code": 1
+    },
+    "honest_refactor": {
+      "blocked": [],
+      "exit_code": 0
+    },
+    "seeded_regression": {
+      "blocked": [
+        "refund_amount_correct",
+        "reply_amount_matches_ledger",
+        "pass_rate",
+        "pass_hat_5",
+        "slice:money_movement/pass_rate",
+        "slice:adversarial/pass_rate",
+        "slice:denial/pass_rate"
+      ],
+      "exit_code": 1
+    },
+    "slice_regression": {
+      "blocked": [
+        "slice:money_movement/pass_rate"
+      ],
+      "exit_code": 1
+    },
+    "swarm": {
+      "blocked": [],
+      "exit_code": 0
+    }
+  },
+  "eval_set_sha": "5fa347e61392",
+  "flaky_failed_trials_by_seed": {
+    "33": 12
+  },
+  "flaky_item_success_counts": {
+    "E-001": 4,
+    "E-002": 5,
+    "E-003": 5,
+    "E-004": 5,
+    "E-005": 5,
+    "E-006": 5,
+    "E-007": 4,
+    "E-008": 4,
+    "E-009": 5,
+    "E-010": 4,
+    "E-011": 4,
+    "E-012": 4,
+    "E-013": 4,
+    "E-014": 5,
+    "E-101": 5,
+    "E-102": 5,
+    "E-103": 5,
+    "E-104": 5,
+    "E-105": 5,
+    "E-106": 5,
+    "E-107": 4,
+    "E-108": 4,
+    "E-109": 4,
+    "E-110": 5,
+    "E-111": 4,
+    "E-112": 4,
+    "E-113": 5,
+    "E-114": 5
+  },
+  "metric_spec_version": "2.3",
+  "pass_hat_5_floor": 0.8,
+  "pass_rate_paired_ci": {
+    "fixed": {
+      "delta": 0.021428571428571463,
+      "high": 0.04285714285714293,
+      "low": 0.0
+    },
+    "flaky_regression": {
+      "delta": -0.06428571428571417,
+      "high": -0.014285714285714346,
+      "low": -0.1142857142857141
+    },
+    "honest_refactor": {
+      "delta": 0.021428571428571463,
+      "high": 0.04285714285714293,
+      "low": 0.0
+    },
+    "seeded_regression": {
+      "delta": -0.33571428571428563,
+      "high": -0.17142857142857149,
+      "low": -0.5
+    },
+    "slice_regression": {
+      "delta": -0.042857142857142705,
+      "high": 0.02857142857142858,
+      "low": -0.12142857142857155
+    },
+    "swarm": {
+      "delta": 0.0,
+      "high": 0.0,
+      "low": 0.0
+    }
+  },
+  "remaining_milestone": "M7 integrity_check and ratchet; the two full-advanced integrity tests still fail.",
+  "reports": {
+    "fixed": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.3",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 49.5043,
+        "db_fact_kept": 1.0,
+        "pass_5": 1.0,
+        "pass_at_1": 1.0,
+        "pass_at_3": 1.0,
+        "pass_at_5": 1.0,
+        "pass_hat_1": 1.0,
+        "pass_hat_3": 1.0,
+        "pass_hat_5": 1.0,
+        "pass_rate": 1.0,
+        "proposal_amount_correct": 1.0,
+        "refund_amount_correct": 1.0,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_fixed_v2.json",
+      "run_id": "E-fixed-20261118-5fa3",
+      "sha12": "73f23ee4ada9"
+    },
+    "flaky_regression": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.3",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 54.1453,
+        "db_fact_kept": 1.0,
+        "pass_5": 0.5714,
+        "pass_at_1": 0.9143,
+        "pass_at_3": 1.0,
+        "pass_at_5": 1.0,
+        "pass_hat_1": 0.9143,
+        "pass_hat_3": 0.7429,
+        "pass_hat_5": 0.5714,
+        "pass_rate": 0.9143,
+        "proposal_amount_correct": 0.9143,
+        "refund_amount_correct": 0.9643,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_flaky_regression_v2.json",
+      "run_id": "E-flaky_regression-20261118-5fa3",
+      "sha12": "d8ca9370d406"
+    },
+    "honest_refactor": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.3",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 57.7186,
+        "db_fact_kept": 1.0,
+        "pass_5": 1.0,
+        "pass_at_1": 1.0,
+        "pass_at_3": 1.0,
+        "pass_at_5": 1.0,
+        "pass_hat_1": 1.0,
+        "pass_hat_3": 1.0,
+        "pass_hat_5": 1.0,
+        "pass_rate": 1.0,
+        "proposal_amount_correct": 1.0,
+        "refund_amount_correct": 1.0,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_honest_refactor_v2.json",
+      "run_id": "E-honest_refactor-20261118-5fa3",
+      "sha12": "5f9158f1fff3"
+    },
+    "seeded_regression": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.3",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 91.4522,
+        "db_fact_kept": 0.8929,
+        "pass_5": 0.6429,
+        "pass_at_1": 0.6429,
+        "pass_at_3": 0.6429,
+        "pass_at_5": 0.6429,
+        "pass_hat_1": 0.6429,
+        "pass_hat_3": 0.6429,
+        "pass_hat_5": 0.6429,
+        "pass_rate": 0.6429,
+        "proposal_amount_correct": 0.7143,
+        "refund_amount_correct": 0.7857,
+        "reply_amount_matches_ledger": 0.7143,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_seeded_regression_v2.json",
+      "run_id": "E-seeded_regression-20261118-5fa3",
+      "sha12": "eef163744c62"
+    },
+    "slice_regression": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.3",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 52.9053,
+        "db_fact_kept": 1.0,
+        "pass_5": 0.8929,
+        "pass_at_1": 0.9357,
+        "pass_at_3": 0.9893,
+        "pass_at_5": 1.0,
+        "pass_hat_1": 0.9357,
+        "pass_hat_3": 0.8929,
+        "pass_hat_5": 0.8929,
+        "pass_rate": 0.9357,
+        "proposal_amount_correct": 0.9357,
+        "refund_amount_correct": 0.9357,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_slice_regression.json",
+      "run_id": "E-slice_regression-20261118-5fa3",
+      "sha12": "beaaadc5eaac"
+    },
+    "swarm": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.3",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 50.8077,
+        "db_fact_kept": 0.9786,
+        "pass_5": 0.8929,
+        "pass_at_1": 0.9786,
+        "pass_at_3": 1.0,
+        "pass_at_5": 1.0,
+        "pass_hat_1": 0.9786,
+        "pass_hat_3": 0.9357,
+        "pass_hat_5": 0.8929,
+        "pass_rate": 0.9786,
+        "proposal_amount_correct": 0.9786,
+        "refund_amount_correct": 0.9786,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/baseline_v2.json",
+      "run_id": "E-swarm-20261118-5fa3",
+      "sha12": "7cc2c2d7bf21"
+    }
+  },
+  "source_hash_newlines": "LF",
+  "source_parent_commit": "8e176533b96974ec91749c84054d580b08f273b6",
+  "source_sha12": {
+    "config/fm_map.yaml": "81284d69cd02",
+    "config/metric_spec_v2.yaml": "fba63d610e02",
+    "lab9/eval.py": "bec26f0a6bf2",
+    "lab9/gate.py": "91e4e05c13f1",
+    "lab9/stats.py": "154a52cd83e4"
+  }
+}

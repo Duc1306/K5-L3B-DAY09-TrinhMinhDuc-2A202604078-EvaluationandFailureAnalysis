@@ -1,0 +1,34 @@
+.........FF.......................................                       [100%]
+================================== FAILURES ===================================
+__________________ test_integrity_flags_nan_and_dropped_rows __________________
+
+    def test_integrity_flags_nan_and_dropped_rows():
+        from lab9 import gate
+
+        base = _report(copy.deepcopy(ROWS), {"pass_rate": 1.0})
+        assert gate.integrity_check(base, base, SPEC) == []
+        nan = _report(copy.deepcopy(ROWS), {"pass_rate": float("nan")})
+>       assert gate.integrity_check(nan, base, SPEC)
+E       AssertionError: assert []
+E        +  where [] = <function integrity_check at 0x000001BD6BC41760>({'evaluator_failures': [], 'manifest': {'eval_set_sha': 'x', 'items': 4, 'seeds': [1, 2]}, 'metrics': {'pass_rate': na...', 'pass_rate': True, 'seed': 1, 'slices': []}, {'item_id': 'E-002', 'pass_rate': True, 'seed': 2, 'slices': []}, ...]}, {'evaluator_failures': [], 'manifest': {'eval_set_sha': 'x', 'items': 4, 'seeds': [1, 2]}, 'metrics': {'pass_rate': 1....', 'pass_rate': True, 'seed': 1, 'slices': []}, {'item_id': 'E-002', 'pass_rate': True, 'seed': 2, 'slices': []}, ...]}, {'eval_set_version': 'v2', 'metrics': [{'blocking': True, 'id': 'pass_rate', 'kind': 'capability', 'threshold': {'min': 0.8}}]})
+E        +    where <function integrity_check at 0x000001BD6BC41760> = <module 'lab9.gate' from 'C:\\Users\\84328\\K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis\\src\\lab9\\gate.py'>.integrity_check
+
+tests\test_lab9_advanced.py:51: AssertionError
+_____________________ test_integrity_flags_loosened_spec ______________________
+
+    def test_integrity_flags_loosened_spec():
+        from lab9 import gate
+
+        base = _report(copy.deepcopy(ROWS), {"pass_rate": 1.0})
+        loose = copy.deepcopy(SPEC)
+        loose["metrics"][0]["threshold"]["min"] = 0.5
+>       assert gate.integrity_check(base, base, loose, SPEC)
+E       AssertionError: assert []
+E        +  where [] = <function integrity_check at 0x000001BD6BC41760>({'evaluator_failures': [], 'manifest': {'eval_set_sha': 'x', 'items': 4, 'seeds': [1, 2]}, 'metrics': {'pass_rate': 1....', 'pass_rate': True, 'seed': 1, 'slices': []}, {'item_id': 'E-002', 'pass_rate': True, 'seed': 2, 'slices': []}, ...]}, {'evaluator_failures': [], 'manifest': {'eval_set_sha': 'x', 'items': 4, 'seeds': [1, 2]}, 'metrics': {'pass_rate': 1....', 'pass_rate': True, 'seed': 1, 'slices': []}, {'item_id': 'E-002', 'pass_rate': True, 'seed': 2, 'slices': []}, ...]}, {'eval_set_version': 'v2', 'metrics': [{'blocking': True, 'id': 'pass_rate', 'kind': 'capability', 'threshold': {'min': 0.5}}]}, {'eval_set_version': 'v2', 'metrics': [{'blocking': True, 'id': 'pass_rate', 'kind': 'capability', 'threshold': {'min': 0.8}}]})
+E        +    where <function integrity_check at 0x000001BD6BC41760> = <module 'lab9.gate' from 'C:\\Users\\84328\\K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis\\src\\lab9\\gate.py'>.integrity_check
+
+tests\test_lab9_advanced.py:62: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_lab9_advanced.py::test_integrity_flags_nan_and_dropped_rows
+FAILED tests/test_lab9_advanced.py::test_integrity_flags_loosened_spec - Asse...
+2 failed, 48 passed, 388 deselected in 3.81s
