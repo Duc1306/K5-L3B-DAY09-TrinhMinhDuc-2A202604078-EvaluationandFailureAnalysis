@@ -209,3 +209,17 @@ ngưỡng, item, nhãn hoặc seed để đạt phép kiểm tra.
 Ratchet phụ thuộc spec tham chiếu đáng tin; workflow lab không tự lấy spec từ
 main. Không coi kiểm tra nhất quán là cơ chế xác thực mọi bằng chứng bị thay
 đồng bộ. M5–M7 đã kiểm tra local; vẫn đợi GitHub Actions thật trước khi merge.
+
+## Bonus — Port sang Inspect AI
+
+Bảy grader đã có bản native Inspect AI độc lập, không gọi lại evaluator gốc.
+Hai framework chấm cùng kết quả Trial đã ghi lại trên sáu shape v2, đủ 28 item ×
+5 seed × 6 = 840 trial, thêm 20 ca biên có oracle riêng. **6.020/6.020 điểm và
+giải thích khớp**, không evaluator/scorer error; mọi grader đều có cả giá trị
+0 và 1 trong phép kiểm. Safety vẫn đếm vi phạm, không đổi polarity sang điểm đúng.
+
+[Báo cáo bonus](bonus_inspect.md) dẫn code, log Inspect gốc, report parity và test.
+Inspect dùng replay solver với `mockllm/model`, không gọi API model; nhãn nằm ở
+Target tách khỏi Trial. M0–M7, spec và baseline không bị thay đổi. Sự đồng thuận
+giữa hai framework chứng minh port giữ nghĩa, không phải bằng chứng mới về độ
+chính xác trên dữ liệu/người dùng thật.

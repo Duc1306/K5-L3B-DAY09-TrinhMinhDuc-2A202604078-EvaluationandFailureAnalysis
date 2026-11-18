@@ -148,3 +148,19 @@ src/config/metric_spec_v2.yaml, fm_map.yaml, data/eval/adversarial_v2.json      
 src/config/metric_spec.yaml   ngưỡng (ratchet: cùng eval-set version chỉ được chặt hơn)
 ```
 Quy tắc: không sửa file `lab8/`; không sửa tay `reports/`; không đặt nhãn inline trong item.
+
+## Bonus — Port grader sang Inspect AI
+
+Đã port 7 grader thành native Inspect scorers và đối chiếu với pydantic-evals
+trên cùng 840 trial thật + 20 ca biên: **6.020/6.020 kết quả khớp**, gồm cả
+giải thích; không gọi API model. [Báo cáo bonus](docs/bonus_inspect.md) dẫn code,
+report do script sinh, log Inspect gốc và cách tái lập trong môi trường riêng.
+
+Từ `src`, sau khi cài `requirements-bonus.txt`, chạy:
+
+```powershell
+python -m lab9.inspect_parity
+```
+
+Workflow `lab9-bonus-inspect` kiểm test và parity riêng khi mở PR. Các baseline,
+spec và gate M0–M7 giữ nguyên.
