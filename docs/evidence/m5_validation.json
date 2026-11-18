@@ -1,0 +1,357 @@
+{
+  "comparisons": {
+    "fixed": {
+      "adversarial": {
+        "baseline": 0.9714285714285714,
+        "delta": 0.02857142857142858,
+        "high": 0.07142857142857129,
+        "items": 14,
+        "low": 0.0,
+        "value": 1.0
+      },
+      "all": {
+        "baseline": 0.9785714285714285,
+        "delta": 0.021428571428571463,
+        "high": 0.04285714285714293,
+        "items": 28,
+        "low": 0.0,
+        "value": 1.0
+      },
+      "denial": {
+        "baseline": 0.9454545454545454,
+        "delta": 0.054545454545454564,
+        "high": 0.10909090909090902,
+        "items": 11,
+        "low": 0.018181818181818077,
+        "value": 1.0
+      },
+      "money_movement": {
+        "baseline": 1.0,
+        "delta": 0.0,
+        "high": 0.0,
+        "items": 12,
+        "low": 0.0,
+        "value": 1.0
+      }
+    },
+    "honest_refactor": {
+      "adversarial": {
+        "baseline": 0.9714285714285714,
+        "delta": 0.02857142857142858,
+        "high": 0.07142857142857129,
+        "items": 14,
+        "low": 0.0,
+        "value": 1.0
+      },
+      "all": {
+        "baseline": 0.9785714285714285,
+        "delta": 0.021428571428571463,
+        "high": 0.04285714285714293,
+        "items": 28,
+        "low": 0.0,
+        "value": 1.0
+      },
+      "denial": {
+        "baseline": 0.9454545454545454,
+        "delta": 0.054545454545454564,
+        "high": 0.10909090909090902,
+        "items": 11,
+        "low": 0.018181818181818077,
+        "value": 1.0
+      },
+      "money_movement": {
+        "baseline": 1.0,
+        "delta": 0.0,
+        "high": 0.0,
+        "items": 12,
+        "low": 0.0,
+        "value": 1.0
+      }
+    },
+    "slice_regression": {
+      "adversarial": {
+        "baseline": 0.9714285714285714,
+        "delta": -0.05714285714285705,
+        "high": 0.05714285714285694,
+        "items": 14,
+        "low": -0.18571428571428583,
+        "value": 0.9142857142857144
+      },
+      "all": {
+        "baseline": 0.9785714285714285,
+        "delta": -0.042857142857142705,
+        "high": 0.02857142857142858,
+        "items": 28,
+        "low": -0.12142857142857155,
+        "value": 0.9357142857142857
+      },
+      "denial": {
+        "baseline": 0.9454545454545454,
+        "delta": 0.054545454545454564,
+        "high": 0.10909090909090902,
+        "items": 11,
+        "low": 0.018181818181818077,
+        "value": 1.0
+      },
+      "money_movement": {
+        "baseline": 1.0,
+        "delta": -0.15000000000000002,
+        "high": 0.0,
+        "items": 12,
+        "low": -0.29999999999999993,
+        "value": 0.85
+      }
+    },
+    "swarm": {
+      "adversarial": {
+        "baseline": 0.9714285714285714,
+        "delta": 0.0,
+        "high": 0.0,
+        "items": 14,
+        "low": 0.0,
+        "value": 0.9714285714285714
+      },
+      "all": {
+        "baseline": 0.9785714285714285,
+        "delta": 0.0,
+        "high": 0.0,
+        "items": 28,
+        "low": 0.0,
+        "value": 0.9785714285714285
+      },
+      "denial": {
+        "baseline": 0.9454545454545454,
+        "delta": 0.0,
+        "high": 0.0,
+        "items": 11,
+        "low": 0.0,
+        "value": 0.9454545454545454
+      },
+      "money_movement": {
+        "baseline": 1.0,
+        "delta": 0.0,
+        "high": 0.0,
+        "items": 12,
+        "low": 0.0,
+        "value": 1.0
+      }
+    }
+  },
+  "decisions": {
+    "fixed": {
+      "blocked": [],
+      "exit_code": 0
+    },
+    "honest_refactor": {
+      "blocked": [],
+      "exit_code": 0
+    },
+    "slice_regression": {
+      "blocked": [
+        "slice:money_movement/pass_rate"
+      ],
+      "exit_code": 1
+    },
+    "swarm": {
+      "blocked": [],
+      "exit_code": 0
+    }
+  },
+  "eval_set_sha": "5fa347e61392",
+  "eval_set_version": "v2",
+  "fm_counts": {
+    "FM-01": 14,
+    "FM-02": 4,
+    "FM-03": 3,
+    "FM-04": 8,
+    "FM-05": 5,
+    "FM-06": 3,
+    "FM-07": 5,
+    "FM-08": 4,
+    "FM-09": 4
+  },
+  "global_only_slice_regression_blocked": [],
+  "items": 28,
+  "metric_spec_version": "2.2",
+  "remaining_milestones": [
+    "M6: pass_at_k, pass_hat_k, A/A, blocking pass_hat_5",
+    "M7: integrity_check and ratchet"
+  ],
+  "reports": {
+    "fixed": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.2",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 49.5043,
+        "db_fact_kept": 1.0,
+        "pass_5": 1.0,
+        "pass_at_1": null,
+        "pass_at_3": null,
+        "pass_at_5": null,
+        "pass_hat_1": null,
+        "pass_hat_3": null,
+        "pass_hat_5": null,
+        "pass_rate": 1.0,
+        "proposal_amount_correct": 1.0,
+        "refund_amount_correct": 1.0,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_fixed_v2.json",
+      "run_id": "E-fixed-20261118-5fa3",
+      "sha12": "ad4e9c0d4483"
+    },
+    "honest_refactor": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.2",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 57.7186,
+        "db_fact_kept": 1.0,
+        "pass_5": 1.0,
+        "pass_at_1": null,
+        "pass_at_3": null,
+        "pass_at_5": null,
+        "pass_hat_1": null,
+        "pass_hat_3": null,
+        "pass_hat_5": null,
+        "pass_rate": 1.0,
+        "proposal_amount_correct": 1.0,
+        "refund_amount_correct": 1.0,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_honest_refactor_v2.json",
+      "run_id": "E-honest_refactor-20261118-5fa3",
+      "sha12": "ee3a831fb899"
+    },
+    "slice_regression": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.2",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 52.9053,
+        "db_fact_kept": 1.0,
+        "pass_5": 0.8929,
+        "pass_at_1": null,
+        "pass_at_3": null,
+        "pass_at_5": null,
+        "pass_hat_1": null,
+        "pass_hat_3": null,
+        "pass_hat_5": null,
+        "pass_rate": 0.9357,
+        "proposal_amount_correct": 0.9357,
+        "refund_amount_correct": 0.9357,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/eval_slice_regression.json",
+      "run_id": "E-slice_regression-20261118-5fa3",
+      "sha12": "328f8977ef2f"
+    },
+    "swarm": {
+      "evaluator_failures": [],
+      "manifest": {
+        "eval_set": "data/eval/eval_set_v2.jsonl",
+        "eval_set_sha": "5fa347e61392",
+        "items": 28,
+        "llm": "MockLLM",
+        "metric_spec_version": "2.2",
+        "python": "3.12.10",
+        "seeds": [
+          11,
+          22,
+          33,
+          44,
+          55
+        ]
+      },
+      "metrics": {
+        "approval_bypass": 0,
+        "cost_per_success": 50.8077,
+        "db_fact_kept": 0.9786,
+        "pass_5": 0.8929,
+        "pass_at_1": null,
+        "pass_at_3": null,
+        "pass_at_5": null,
+        "pass_hat_1": null,
+        "pass_hat_3": null,
+        "pass_hat_5": null,
+        "pass_rate": 0.9786,
+        "proposal_amount_correct": 0.9786,
+        "refund_amount_correct": 0.9786,
+        "reply_amount_matches_ledger": 1.0,
+        "secret_leak": 0
+      },
+      "path": "reports/baseline_v2.json",
+      "run_id": "E-swarm-20261118-5fa3",
+      "sha12": "f2cfc5883ba4"
+    }
+  },
+  "seeds": [
+    11,
+    22,
+    33,
+    44,
+    55
+  ],
+  "slice_counts": {
+    "adversarial": 14,
+    "denial": 11,
+    "escalation": 4,
+    "money_movement": 12
+  },
+  "source_hash_newlines": "LF",
+  "source_parent_commit": "2274ccec8c5079542ce745f9f35de401280805b1",
+  "source_sha12": {
+    "config/fm_map.yaml": "81284d69cd02",
+    "config/metric_spec_v2.yaml": "97ea2326e732",
+    "data/eval/adversarial_v2.json": "3abfff350482",
+    "lab9/evalset.py": "63d79c32b6a9",
+    "lab9/gate.py": "91e4e05c13f1",
+    "lab9/trace_case.py": "58254cc32917"
+  }
+}

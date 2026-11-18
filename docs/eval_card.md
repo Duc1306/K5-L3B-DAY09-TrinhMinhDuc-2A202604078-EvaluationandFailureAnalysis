@@ -120,3 +120,33 @@ Không có waiver tự động cho vi phạm tiền hoặc approval.
 Thêm/đổi item hoặc nhãn đã adjudicate → tăng `eval_set_version` và sinh baseline mới.
 Đổi metric → tăng `metric_spec_version`; cùng eval-set version chỉ giữ nguyên hoặc
 siết ngưỡng. M3 đã tăng spec từ 1.0 lên 1.1 khi thêm hai metric.
+
+## M5 — Snapshot v2
+
+Core đã merge vào `origin/main` commit `2274cce`; phần này được làm trên nhánh
+`advanced/m5`. V1 ở trên được giữ nguyên làm bằng chứng Core.
+
+- Eval set **v2**, SHA **`5fa347e61392`**, 28 item × 5 seed = **140 trial/shape**;
+  metric spec **v2.2**. Nhãn riêng tại `labels_v2.json`; 8 cơ chế tấn công đã map,
+  mọi FM được tấn công có ít nhất 3 item. Chi tiết tại [M5](m5_evalset_and_slices.md).
+- Baseline `E-swarm-20261118-5fa3` có pass_rate **0.9786**; `fixed` và
+  `honest_refactor` đều **1.0000** và gate exit 0, không có evaluator failure.
+- `E-slice_regression-20261118-5fa3` có pass_rate toàn bộ **0.9357**, Δ **−0.043**,
+  CI **[−0.121, +0.029]**, nên metric toàn cục chưa chặn. Slice tiền có **0.8500**,
+  Δ **−0.150**, CI **[−0.300, 0.000]**; sàn **0.90** chặn nó.
+- Gate exit 1 với duy nhất **`slice:money_movement/pass_rate`**; slice adversarial
+  đạt 0.9143 và denial 1.0000. `fixed`/`honest_refactor` đạt 1.0 ở cả ba slice.
+- **104 test Core + M5 PASS** trên Python 3.12.10 và 3.13.18. Các report giữ đủ
+  140 cặp item/seed, có LF chuẩn để SHA không đổi khi commit.
+- [Số liệu/hash v2](evidence/m5_validation.json), [gate log](evidence/m5_gate.txt)
+  và [8 trace/đối chứng](evidence/m5_traces.json) do script sinh.
+
+Sàn 0.90 áp dụng cho `money_movement`, `adversarial`, `denial`; không nới ngưỡng
+v1 và không thay variant để đạt kiểm tra. Bootstrap vẫn lấy item làm đơn vị,
+1.000 resample, RNG 2027, confidence 95% như M4.
+
+**Chưa hoàn thành M6–M7:** pass@k/pass^k và integrity/ratchet còn TODO. Các trường
+pass_at/pass_hat hiện `null`, chưa được dùng làm gate; ngưỡng `pass_hat_5` cần
+chọn từ A/A ở M6, chưa tuyên bố đã chọn. CI v2 của repo kiểm chung M5–M7 khi
+commit baseline v2, nên M5 local PASS chưa có nghĩa nhánh nâng cao sẵn sàng merge.
+Giới hạn về MockLLM, dữ liệu công khai và lỗi hiếm 1/3 seed với 5 seed vẫn giữ nguyên.
