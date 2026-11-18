@@ -1,0 +1,18 @@
+name: lab9-bonus-inspect
+on: [pull_request, workflow_dispatch]
+permissions: {contents: read}
+concurrency: {group: "bonus-inspect-${{ github.ref }}", cancel-in-progress: true}
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env: {PYTHONUTF8: "1"}
+    defaults: {run: {working-directory: src}}
+    steps:
+      - uses: actions/checkout@v7
+        with: {persist-credentials: false}
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with: {python-version: "3.13", activate-environment: true, enable-cache: true, cache-dependency-glob: "src/requirements*.txt"}
+      - run: uv pip install -r requirements-bonus.txt
+      - run: python -m pytest -q -m student -o addopts= -k lab9
+      - run: python -m lab9.inspect_parity

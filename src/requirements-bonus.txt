@@ -1,0 +1,4 @@
+# Optional Inspect AI port; keep the Core/Advanced dependency files unchanged.
+-r requirements.txt
+-r requirements-lab9.txt
+inspect-ai==0.3.291

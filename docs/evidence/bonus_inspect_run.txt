@@ -1,0 +1,11 @@
+captured swarm: 140 trials
+captured fixed: 140 trials
+captured honest_refactor: 140 trials
+captured seeded_regression: 140 trials
+captured slice_regression: 140 trials
+captured flaky_regression: 140 trials
+parity: 840 real + 20 controls; 6020 comparisons
+mismatches: 0; oracle errors: 0; explanation mismatches: 0
+Inspect status: success; model usage: {}
+report: reports\bonus_inspect_parity.json
+exit 0 — graders match
