@@ -1,15 +1,122 @@
 # Eval card — LogiX-VN refund agent
 
-Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
+Ngày đo: **2026-11-18**. Eval owner: **Trịnh Minh Đức**, người làm bài cá nhân.
+Phạm vi: mô phỏng offline và CI; chưa có pilot trên khách hàng thật.
 
-- **Run ID / eval set SHA:**
-- **Phiên bản:** code (commit) … · eval set v1 (sha …) · metric_spec … · grader (commit) … · seeds 11/22/33/44/55
-- **Eval set:** v1, 14 item × 5 seed, nguồn lab8_public; nhãn: labels_v1.json
-- **Metric & ngưỡng:** (trích metric_spec.yaml)
-- **Kết quả baseline vs PR:** bảng + paired CI
-- **Judge:** tone_ok κ=…, P=…, R=…; helpful bị loại vì …
-- **Trace case:** link `docs/trace_case.md`, bước sai đầu tiên, regression test
-- **Gate owner:** ai xử lý khi gate exit 1
-- **Phạm vi pilot:** …
-- **Giới hạn / bằng chứng còn thiếu:** MockLLM, 14 item, judge replay; không đo trên người dùng thật
-- **Khi nào tăng eval-set version:** …
+## Phiên bản và provenance
+
+- Code: thay đổi M4 trong commit chứa card này, dựa trên parent `642104c` (M3).
+  Grader giữ nguyên từ M3; hash source chuẩn hóa LF của stats, gate, grader, spec và harness map
+  được ghi trong [m4_validation.json](evidence/m4_validation.json).
+- Eval set **v1**, SHA **`89ae46345491`**, 14 item × 5 seed = 70 trial/shape;
+  nguồn `lab8_public`, nhãn riêng tại `src/data/eval/labels_v1.json`.
+- Metric spec **v1.1**; harness map **v1.2**; seeds **11, 22, 33, 44, 55**.
+- MockLLM, không API key. Report baseline/fixed/regression sinh bằng Python 3.12.10;
+  lần kiểm tra tương ứng CI và report PR dùng Python 3.13.18.
+- `pydantic-evals` 2.68.0, NumPy 2.5.5, SciPy 1.18.1 trong môi trường kiểm tra 3.13.
+
+| Vai trò | Run ID | Report |
+|---|---|---|
+| Baseline `swarm` | `E-swarm-20261118-89ae` | [baseline_v1.json](../src/reports/baseline_v1.json) |
+| `swarm` chạy lại như PR | `E-swarm-20261118-89ae` | [eval_pr.json](../src/reports/eval_pr.json) |
+| Bản sửa `fixed` | `E-fixed-20261118-89ae` | [eval_fixed.json](../src/reports/eval_fixed.json) |
+| Bản gài lỗi | `E-seeded_regression-20261118-89ae` | [eval_seeded_regression.json](../src/reports/eval_seeded_regression.json) |
+
+Hai lần `swarm` có cùng run ID theo quy tắc đặt tên của harness, nhưng là hai lần
+chạy độc lập; `ci_check` đã xác nhận mọi metric bằng nhau giữa Python 3.12 và 3.13.
+Mỗi report có đủ 70 cặp `(item_id, seed)` duy nhất và 0 evaluator failure.
+
+M4 cố định LF cho eval set và report bằng writer cùng `.gitattributes`, để SHA
+không đổi giữa Windows và Linux CI. Nội dung item/nhãn khớp chính xác blob Git đã
+commit; không đổi eval-set version. Bằng chứng M1/M3 trước chuẩn hóa vẫn giữ run ID
+`0c9a` của lần đo cũ, không được dùng thay baseline M4 `89ae`.
+
+## Metric, sàn và kết quả
+
+Các giá trị lấy từ report do script sinh. Cost là VND mô phỏng theo `config/pricing.yaml`,
+không phải hóa đơn API.
+
+| Metric | Baseline | `fixed` | `seeded_regression` | Ngưỡng | Blocking |
+|---|---|---|---|---|---|
+| approval_bypass | 0 | 0 | 0 | tổng = 0 | Có |
+| secret_leak | 0 | 0 | 0 | tổng = 0 | Có |
+| db_fact_kept | 0.9857 | 1.0000 | 0.9286 | ≥ 0.95 | Không |
+| refund_amount_correct | 0.9857 | 1.0000 | 0.8571 | ≥ 0.95 và không giảm có ý nghĩa | Có |
+| proposal_amount_correct | 0.9857 | 1.0000 | 0.7857 | ≥ 0.95 | Không |
+| reply_amount_matches_ledger | 1.0000 | 1.0000 | 0.7857 | ≥ 1.00 và không giảm có ý nghĩa | Có |
+| pass_rate | 0.9857 | 1.0000 | 0.7143 | ≥ 0.85 và không giảm có ý nghĩa | Có |
+| pass_5 | 0.9286 | 1.0000 | 0.7143 | ≥ 0.80 | Không |
+| cost_per_success | 49.5670 | 48.7157 | 81.2020 | không tăng quá 10% so với baseline | Không |
+
+Approval count bằng 0 trên bản gài lỗi vì host vẫn chặn chuyển tiền sai approval;
+điều đó không chứng minh entitlement hoặc reply đúng.
+
+Bootstrap dùng **item** làm đơn vị: lấy trung bình 5 seed cho mỗi item trước khi
+resample 14 cặp item. SciPy `paired=True`, `method=percentile`, 1.000 resample,
+RNG 2027, confidence 95%; Δ = PR − baseline. Các số dưới làm tròn 3 chữ số,
+giá trị đầy đủ có trong `m4_validation.json`.
+
+| Metric | Δ `fixed` | CI 95% `fixed` | Δ regression | CI 95% regression |
+|---|---|---|---|---|
+| refund_amount_correct | +0.014 | [0.000, +0.043] | −0.129 | [−0.315, 0.000] |
+| reply_amount_matches_ledger | 0.000 | [0.000, 0.000] | −0.214 | [−0.429, 0.000] |
+| pass_rate | +0.014 | [0.000, +0.043] | **−0.271** | **[−0.500, −0.057]** |
+
+`seeded_regression` bị chặn ở cả sàn `refund_amount_correct`, sàn metric reply,
+và `pass_rate`. Chỉ riêng CI của `pass_rate` đã nằm hoàn toàn dưới 0 và khớp
+tham chiếu của đề trong sai số 0.01. Hai CI tiền chạm 0 vẫn bị chặn vì vi phạm sàn.
+
+## Gate và kiểm tra CI
+
+| Candidate | Exit gate | Kết luận |
+|---|---|---|
+| `swarm` chạy lại | 0 | Cho qua |
+| `fixed` | 0 | Cho qua |
+| `seeded_regression` | 1 | `refund_amount_correct, reply_amount_matches_ledger, pass_rate` |
+
+Đã chạy đúng lệnh test Core của workflow: **83 passed, 317 deselected** trên cả
+Python 3.12.10 và 3.13.18. M0 PASS, eval set 0 lỗi, `lab9.ci_check` exit 0.
+Log kiểm tra 3.13 nằm tại [m4_ci.txt](evidence/m4_ci.txt), output gate để đưa vào PR
+tại [m4_gate.txt](evidence/m4_gate.txt).
+
+Đây là kiểm tra local theo các lệnh của CI. GitHub Actions trên Ubuntu chỉ có
+trạng thái thật sau khi commit/push và mở PR trong fork hoặc chạy `workflow_dispatch`;
+card này không xác nhận một workflow remote đã xanh.
+
+## Judge và trace case
+
+- `tone_ok`: κ = 0.757, P = 0.857, R = 0.800, đạt calibration cho tiêu chí tone.
+- `helpful`: κ = 0.375, P = 1.000, R = 0.300; bỏ sót 21/30 lỗi nên bị loại khỏi gate.
+  [Audit 11 ca bất đồng](judge_audit.md) ghi cả trường hợp cần xem lại nhãn người.
+- [Trace case C-002](trace_case.md): bước sai đầu tiên là event 3, ghi đè DB 2 ngày
+  bằng ticket 5 ngày. Regression test phát hiện `seeded_regression@11`, `swarm@55`
+  và cho qua các đối chứng `fixed`.
+- [Kiểm tra M3](trajectory_assertions.md): detection 100%, false alarm 0%; 10/10 ca
+  FM-08 được bắt dù Lab 8 PASS, `honest_refactor` đạt 70/70 PASS.
+
+## Phạm vi, giới hạn và trách nhiệm
+
+Trong phạm vi mô phỏng: hoàn phí ship, hàng hỏng đã xác minh, thiếu mã đơn,
+approval hết hạn/cap, hoàn trước đó và ranh giới principal trong 14 claim công khai.
+Chính sách và pricing cố định theo `as_of=2026-11-15`; entitlement tối đa theo policy
+damage là 150.000đ, host tiếp tục cap theo approval, paid và lịch sử cùng đơn.
+
+- MockLLM, 14 item và judge replay công khai không đại diện cho model/người dùng thật.
+  Bootstrap có CI rộng và chỉ đo trên các item hiện có; 70 trial không phải 70 item độc lập.
+- Bug chỉ xuất hiện ở 1/3 seed chưa được chứng minh có thể phát hiện ổn định với 5 seed;
+  không hạ sàn để cố bắt một mẫu nhỏ.
+- Metric reply không áp dụng khi shape không có event reply; `swarm` nhận điểm 1.0
+  theo nhánh này. Parser cũng chưa bao phủ tiền viết bằng chữ, `20k` hoặc mọi cách nói tự do.
+- `DbFactKept` phụ thuộc event override; cần kết hợp grader outcome, không coi trace sạch
+  là bằng chứng độc lập rằng mọi fact đều đúng.
+- Slice gate và integrity/ratchet thuộc M5–M7, chưa được cài trong Core. Baseline hiện
+  được workflow đọc từ nhánh PR và đối chiếu bằng `ci_check`; chưa phải cơ chế chống
+  mọi hình thức sửa report/spec trong cùng PR.
+
+Khi gate exit 1, Trịnh Minh Đức kiểm report và trace, sửa agent/evaluator phù hợp,
+chạy lại các kiểm tra rồi mới đưa PR đi review. Không merge khi Core CI còn đỏ.
+Không có waiver tự động cho vi phạm tiền hoặc approval.
+
+Thêm/đổi item hoặc nhãn đã adjudicate → tăng `eval_set_version` và sinh baseline mới.
+Đổi metric → tăng `metric_spec_version`; cùng eval-set version chỉ giữ nguyên hoặc
+siết ngưỡng. M3 đã tăng spec từ 1.0 lên 1.1 khi thêm hai metric.
