@@ -1,0 +1,9 @@
+{
+  "command": "python -m lab9.mutation --spec config/metric_spec_v2.yaml --baseline reports/baseline_v2.json",
+  "python": "3.13.18",
+  "exit_code": 0,
+  "regressions_blocked": 3,
+  "regressions_total": 3,
+  "false_alarms": 0,
+  "scope": "Public unmodified variants on fresh runs; this does not validate M7 integrity traps."
+}

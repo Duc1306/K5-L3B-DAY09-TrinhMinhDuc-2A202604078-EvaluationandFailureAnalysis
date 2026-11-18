@@ -2,6 +2,8 @@
 
 Nhánh `advanced/m5` bắt đầu từ `origin/main` commit `2274cce`, sau merge Core M4.
 M5 đã hoàn thành kiểm tra local; CI nâng cao còn bao gồm M6 và M7.
+Báo cáo này giữ snapshot M5 tại commit `8e176533b96974ec91749c84054d580b08f273b6`;
+M6 đã sinh lại các đường dẫn report v2 hiện hành với spec mới.
 
 ## Eval set và mapping
 
@@ -125,10 +127,12 @@ paired CI, metric tùy chọn, dữ liệu thiếu và các đối chứng khôn
 # Gate cuối phải exit 1 với slice:money_movement/pass_rate
 ```
 
-Report dùng [baseline_v2](../src/reports/baseline_v2.json),
-[fixed v2](../src/reports/eval_fixed_v2.json),
-[honest_refactor v2](../src/reports/eval_honest_refactor_v2.json) và
-[slice_regression](../src/reports/eval_slice_regression.json). Report v1 không bị ghi đè.
+Report snapshot M5 dùng
+[baseline_v2](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/8e176533b96974ec91749c84054d580b08f273b6/src/reports/baseline_v2.json),
+[fixed v2](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/8e176533b96974ec91749c84054d580b08f273b6/src/reports/eval_fixed_v2.json),
+[honest_refactor v2](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/8e176533b96974ec91749c84054d580b08f273b6/src/reports/eval_honest_refactor_v2.json) và
+[slice_regression](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/8e176533b96974ec91749c84054d580b08f273b6/src/reports/eval_slice_regression.json).
+Hash trong `m5_validation.json` áp dụng cho snapshot này. Report v1 không bị ghi đè.
 
 Workflow `eval-gate-v2` được kích hoạt khi baseline v2 được commit và chạy **toàn bộ
 M5–M7**: test advanced, eval set và mutation scorecard. Ở bước M5, hàm pass@k/pass^k

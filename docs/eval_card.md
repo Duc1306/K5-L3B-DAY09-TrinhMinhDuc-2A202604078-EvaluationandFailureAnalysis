@@ -145,8 +145,38 @@ Sàn 0.90 áp dụng cho `money_movement`, `adversarial`, `denial`; không nới
 v1 và không thay variant để đạt kiểm tra. Bootstrap vẫn lấy item làm đơn vị,
 1.000 resample, RNG 2027, confidence 95% như M4.
 
-**Chưa hoàn thành M6–M7:** pass@k/pass^k và integrity/ratchet còn TODO. Các trường
+**Trạng thái tại mốc M5:** pass@k/pass^k và integrity/ratchet còn TODO. Các trường
 pass_at/pass_hat hiện `null`, chưa được dùng làm gate; ngưỡng `pass_hat_5` cần
 chọn từ A/A ở M6, chưa tuyên bố đã chọn. CI v2 của repo kiểm chung M5–M7 khi
 commit baseline v2, nên M5 local PASS chưa có nghĩa nhánh nâng cao sẵn sàng merge.
 Giới hạn về MockLLM, dữ liệu công khai và lỗi hiếm 1/3 seed với 5 seed vẫn giữ nguyên.
+
+## M6 — Độ ổn định và sàn pass_hat_5
+
+M6 đã hoàn thiện estimator `pass_at_k`, `pass_hat_k` bằng tổ hợp và validation
+n/c/k. [Báo cáo M6](m6_reliability_and_noise.md) giải thích công thức, aggregation
+theo item, chọn sàn và giới hạn A/A. Eval set v2 SHA `5fa347e61392` không đổi;
+spec tăng lên **v2.3**, thêm **pass_hat_5 ≥ 0.80, blocking**, giữ nguyên sàn cũ.
+
+- A/A bộ seed chuẩn 11/22/33/44/55 và 66/77/88/99/110 có mọi Δ = 0;
+  `pass_hat_5` đều **0.8929**, tạo khoảng cách **0.0929** với sàn. Đây là biến
+  động quan sát trên hai bộ MockLLM, không phải CI nhiễu cho LLM thật.
+- Report v2 được sinh lại, các metric pass@k/pass^k đã có số đầy đủ cho 5 seed.
+  Baseline có pass^3 = **0.9357**, pass^5 = **0.8929**; `fixed` và `honest_refactor`
+  đều 1.0 và được merge theo gate local.
+- `flaky_regression` có mean **0.9143**, pass@5 **1.0**, nhưng pass^5 chỉ **0.5714**;
+  gate chặn ở `pass_hat_5`, `pass_rate` và slice tiền. CI pass_rate ở ca công khai
+  này cũng âm [−0.114, −0.014]; không coi pass_hat_5 là lý do chặn duy nhất.
+- Một vector test `[4,4,5]` PASS trong 5 trial/item có mean 0.8667, CI chạm 0,
+  pass^5 = 0.3333 và chỉ metric độ ổn định chặn. Đây là bằng chứng cho trường hợp
+  mean và paired CI chưa đủ.
+- Mutation entry point gốc đạt **3/3 regression, 0 báo nhầm**;
+  [gate log](evidence/m6_gate.txt), [mutation log](evidence/m6_mutation.txt),
+  [A/A](evidence/m6_aa.json), [source/report hashes](evidence/m6_validation.json).
+- **131 test Core + M5 + M6 PASS** trên Python 3.12.10 và 3.13.18.
+  Full advanced còn **2 lỗi M7**, với 48 test PASS; xem [log](evidence/m6_tests.txt).
+
+Snapshot M5 và số liệu null của mốc đó được giữ theo commit `8e17653`.
+**Hiện chỉ còn M7:** integrity/ratchet và trap chưa hoàn thiện; CI advanced chưa
+xanh dù các variant trung thực đã cho kết quả đúng. Với LLM thật cần A/A lặp lại
+để ước lượng nhiễu, và vẫn không hạ sàn để cố bắt lỗi hiếm bằng một cỡ mẫu nhỏ.

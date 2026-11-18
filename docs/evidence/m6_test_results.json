@@ -1,0 +1,11 @@
+{
+  "python": "3.13.18",
+  "command": "python -m pytest -q -m student -o addopts= -k advanced",
+  "exit_code": 1,
+  "remaining_failures": [
+    "tests/test_lab9_advanced.py::test_integrity_flags_nan_and_dropped_rows",
+    "tests/test_lab9_advanced.py::test_integrity_flags_loosened_spec"
+  ],
+  "summary": "2 failed, 48 passed, 388 deselected in 3.81s",
+  "remaining_milestone": "M7"
+}
