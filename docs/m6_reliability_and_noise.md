@@ -2,7 +2,8 @@
 
 M6 được thực hiện trên `advanced/m5`, tiếp nối commit M5 `8e17653`.
 Eval set vẫn là v2 SHA **`5fa347e61392`**, 28 item × 5 seed; spec tăng từ v2.2
-lên **v2.3** khi thêm metric blocking `pass_hat_5`. M7 chưa được cài.
+lên **v2.3** khi thêm metric blocking `pass_hat_5`. Tại snapshot M6, M7 chưa được cài.
+Kết quả hiện hành sau đó ở [báo cáo M7](m7_integrity_and_ratchet.md).
 
 ## Ước lượng pass@k và pass^k
 
@@ -88,12 +89,13 @@ Mutation chạy lại qua entry point gốc đã đạt **3/3 regression bị ch
 [report/hash đầy đủ](evidence/m6_validation.json) ghi kết quả thật. Không sửa
 variant, trap, Lab 8, nhãn, bộ seed hay ngưỡng cũ để đạt phép kiểm tra.
 
-Các report hiện hành: [baseline_v2](../src/reports/baseline_v2.json),
-[fixed](../src/reports/eval_fixed_v2.json),
-[honest_refactor](../src/reports/eval_honest_refactor_v2.json),
-[seeded_regression](../src/reports/eval_seeded_regression_v2.json),
-[slice_regression](../src/reports/eval_slice_regression.json),
-[flaky_regression](../src/reports/eval_flaky_regression_v2.json).
+Các report tại commit M6 `0f7d7aa`:
+[baseline_v2](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/0f7d7aa6a9ffb21552644bf7fa732882463a3b23/src/reports/baseline_v2.json),
+[fixed](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/0f7d7aa6a9ffb21552644bf7fa732882463a3b23/src/reports/eval_fixed_v2.json),
+[honest_refactor](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/0f7d7aa6a9ffb21552644bf7fa732882463a3b23/src/reports/eval_honest_refactor_v2.json),
+[seeded_regression](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/0f7d7aa6a9ffb21552644bf7fa732882463a3b23/src/reports/eval_seeded_regression_v2.json),
+[slice_regression](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/0f7d7aa6a9ffb21552644bf7fa732882463a3b23/src/reports/eval_slice_regression.json),
+[flaky_regression](https://github.com/Duc1306/K5-L3B-DAY09-TrinhMinhDuc-2A202604078-EvaluationandFailureAnalysis/blob/0f7d7aa6a9ffb21552644bf7fa732882463a3b23/src/reports/eval_flaky_regression_v2.json).
 Run ID vẫn theo shape/ngày/eval-set SHA nên có thể giống snapshot M5; dùng
 `metric_spec_version=2.3` và hash report để phân biệt hai mốc. Báo cáo M5 đã liên
 kết tới commit M5 cố định, không dùng report đang được M6 sinh lại để xác minh hash cũ.

@@ -1,0 +1,53 @@
+[
+  {
+    "name": "python312_lab9_tests",
+    "exit_code": 0,
+    "passed": 194,
+    "deselected": 305,
+    "args": [
+      "-m",
+      "pytest",
+      "-q",
+      "-m",
+      "student",
+      "-o",
+      "addopts=",
+      "-k",
+      "lab9"
+    ]
+  },
+  {
+    "name": "python313_lab9_tests",
+    "exit_code": 0,
+    "passed": 194,
+    "deselected": 305,
+    "args": [
+      "-m",
+      "pytest",
+      "-q",
+      "-m",
+      "student",
+      "-o",
+      "addopts=",
+      "-k",
+      "lab9"
+    ]
+  },
+  {
+    "name": "python313_advanced_tests",
+    "exit_code": 0,
+    "passed": 111,
+    "deselected": 388,
+    "args": [
+      "-m",
+      "pytest",
+      "-q",
+      "-m",
+      "student",
+      "-o",
+      "addopts=",
+      "-k",
+      "advanced"
+    ]
+  }
+]

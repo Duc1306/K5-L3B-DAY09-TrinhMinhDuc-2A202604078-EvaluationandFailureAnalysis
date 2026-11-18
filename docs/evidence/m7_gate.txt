@@ -1,0 +1,160 @@
+[core_gate_swarm] python -m lab9.gate --pr C:\Users\84328\AppData\Local\Temp\lab9-m7-ci-1srrhc4e\swarm_v1.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml
+gate: PR E-swarm-20261118-89ae vs main E-swarm-20261118-89ae · eval set 89ae46345491
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9857   {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9857   {"min": 0.95, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  proposal_amount_correct 0.9857   {"min": 0.95}                                                         ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              0.9857   {"min": 0.85, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_5                 0.9286   {"min": 0.8}                                                          ok
+  cost_per_success       49.567   {"max_increase": 0.1}                                                 ok
+exit 0 — merge
+exit_code=0, expected=0
+
+[core_gate_fixed] python -m lab9.gate --pr C:\Users\84328\AppData\Local\Temp\lab9-m7-ci-1srrhc4e\fixed_v1.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml
+gate: PR E-fixed-20261118-89ae vs main E-swarm-20261118-89ae · eval set 89ae46345491
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  1.0      {"min": 0.95, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  proposal_amount_correct 1.0      {"min": 0.95}                                                         ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              1.0      {"min": 0.85, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_5                 1.0      {"min": 0.8}                                                          ok
+  cost_per_success       48.7157  {"max_increase": 0.1}                                                 ok
+exit 0 — merge
+exit_code=0, expected=0
+
+[core_gate_seeded_regression] python -m lab9.gate --pr C:\Users\84328\AppData\Local\Temp\lab9-m7-ci-1srrhc4e\seeded_regression_v1.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml
+gate: PR E-seeded_regression-20261118-89ae vs main E-swarm-20261118-89ae · eval set 89ae46345491
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9286   {"min": 0.95}                                                         warn
+  refund_amount_correct  0.8571   {"min": 0.95, "no_significant_drop": true} Δ -0.129 CI [-0.315, +0.000] BLOCK
+  proposal_amount_correct 0.7857   {"min": 0.95}                                                         warn
+  reply_amount_matches_ledger 0.7857   {"min": 1.0, "no_significant_drop": true} Δ -0.214 CI [-0.429, +0.000] BLOCK
+  pass_rate              0.7143   {"min": 0.85, "no_significant_drop": true} Δ -0.271 CI [-0.500, -0.057] BLOCK
+  pass_5                 0.7143   {"min": 0.8}                                                          warn
+  cost_per_success       81.202   {"max_increase": 0.1}                                                 warn
+exit 1 — blocked: refund_amount_correct, reply_amount_matches_ledger, pass_rate
+exit_code=1, expected=1
+
+[v2_gate_fresh_swarm] python -m lab9.gate --pr C:\Users\84328\AppData\Local\Temp\lab9-m7-ci-1srrhc4e\swarm_v2.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml --base-spec config/metric_spec_v2.yaml
+gate: PR E-swarm-20261118-5fa3 vs main E-swarm-20261118-5fa3 · eval set 5fa347e61392
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9786   {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9786   {"min": 0.9, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  proposal_amount_correct 0.9786   {"min": 0.95}                                                         ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              0.9786   {"min": 0.85, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_hat_5             0.8929   {"min": 0.8}                                                          ok
+  cost_per_success       50.8077  {"max_increase": 0.1}                                                 ok
+  slice:money_movement/pass_rate   1.0      min=0.9   Δ +0.000 CI [+0.000, +0.000]        ok
+  slice:adversarial/pass_rate      0.9714285714285714 min=0.9   Δ +0.000 CI [+0.000, +0.000]        ok
+  slice:denial/pass_rate           0.9454545454545454 min=0.9   Δ +0.000 CI [+0.000, +0.000]        ok
+exit 0 — merge
+exit_code=0, expected=0
+
+[v2_gate_swarm] python -m lab9.gate --pr reports/baseline_v2.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml --base-spec config/metric_spec_v2.yaml
+gate: PR E-swarm-20261118-5fa3 vs main E-swarm-20261118-5fa3 · eval set 5fa347e61392
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9786   {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9786   {"min": 0.9, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  proposal_amount_correct 0.9786   {"min": 0.95}                                                         ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              0.9786   {"min": 0.85, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_hat_5             0.8929   {"min": 0.8}                                                          ok
+  cost_per_success       50.8077  {"max_increase": 0.1}                                                 ok
+  slice:money_movement/pass_rate   1.0      min=0.9   Δ +0.000 CI [+0.000, +0.000]        ok
+  slice:adversarial/pass_rate      0.9714285714285714 min=0.9   Δ +0.000 CI [+0.000, +0.000]        ok
+  slice:denial/pass_rate           0.9454545454545454 min=0.9   Δ +0.000 CI [+0.000, +0.000]        ok
+exit 0 — merge
+exit_code=0, expected=0
+
+[v2_gate_fixed] python -m lab9.gate --pr reports/eval_fixed_v2.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml --base-spec config/metric_spec_v2.yaml
+gate: PR E-fixed-20261118-5fa3 vs main E-swarm-20261118-5fa3 · eval set 5fa347e61392
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  1.0      {"min": 0.9, "no_significant_drop": true} Δ +0.021 CI [+0.000, +0.043] ok
+  proposal_amount_correct 1.0      {"min": 0.95}                                                         ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              1.0      {"min": 0.85, "no_significant_drop": true} Δ +0.021 CI [+0.000, +0.043] ok
+  pass_hat_5             1.0      {"min": 0.8}                                                          ok
+  cost_per_success       49.5043  {"max_increase": 0.1}                                                 ok
+  slice:money_movement/pass_rate   1.0      min=0.9   Δ +0.000 CI [+0.000, +0.000]        ok
+  slice:adversarial/pass_rate      1.0      min=0.9   Δ +0.029 CI [+0.000, +0.071]        ok
+  slice:denial/pass_rate           1.0      min=0.9   Δ +0.055 CI [+0.018, +0.109]        ok
+exit 0 — merge
+exit_code=0, expected=0
+
+[v2_gate_honest_refactor] python -m lab9.gate --pr reports/eval_honest_refactor_v2.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml --base-spec config/metric_spec_v2.yaml
+gate: PR E-honest_refactor-20261118-5fa3 vs main E-swarm-20261118-5fa3 · eval set 5fa347e61392
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  1.0      {"min": 0.9, "no_significant_drop": true} Δ +0.021 CI [+0.000, +0.043] ok
+  proposal_amount_correct 1.0      {"min": 0.95}                                                         ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              1.0      {"min": 0.85, "no_significant_drop": true} Δ +0.021 CI [+0.000, +0.043] ok
+  pass_hat_5             1.0      {"min": 0.8}                                                          ok
+  cost_per_success       57.7186  {"max_increase": 0.1}                                                 warn
+  slice:money_movement/pass_rate   1.0      min=0.9   Δ +0.000 CI [+0.000, +0.000]        ok
+  slice:adversarial/pass_rate      1.0      min=0.9   Δ +0.029 CI [+0.000, +0.071]        ok
+  slice:denial/pass_rate           1.0      min=0.9   Δ +0.055 CI [+0.018, +0.109]        ok
+exit 0 — merge
+exit_code=0, expected=0
+
+[v2_gate_seeded_regression] python -m lab9.gate --pr reports/eval_seeded_regression_v2.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml --base-spec config/metric_spec_v2.yaml
+gate: PR E-seeded_regression-20261118-5fa3 vs main E-swarm-20261118-5fa3 · eval set 5fa347e61392
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.8929   {"min": 0.95}                                                         warn
+  refund_amount_correct  0.7857   {"min": 0.9, "no_significant_drop": true} Δ -0.193 CI [-0.329, -0.064] BLOCK
+  proposal_amount_correct 0.7143   {"min": 0.95}                                                         warn
+  reply_amount_matches_ledger 0.7143   {"min": 1.0, "no_significant_drop": true} Δ -0.286 CI [-0.464, -0.143] BLOCK
+  pass_rate              0.6429   {"min": 0.85, "no_significant_drop": true} Δ -0.336 CI [-0.500, -0.171] BLOCK
+  pass_hat_5             0.6429   {"min": 0.8}                                                          BLOCK
+  cost_per_success       91.4522  {"max_increase": 0.1}                                                 warn
+  slice:money_movement/pass_rate   0.75     min=0.9   Δ -0.250 CI [-0.500, +0.000]        BLOCK
+  slice:adversarial/pass_rate      0.5714285714285714 min=0.9   Δ -0.400 CI [-0.657, -0.143]        BLOCK
+  slice:denial/pass_rate           0.36363636363636365 min=0.9   Δ -0.582 CI [-0.836, -0.309]        BLOCK
+exit 1 — blocked: refund_amount_correct, reply_amount_matches_ledger, pass_rate, pass_hat_5, slice:money_movement/pass_rate, slice:adversarial/pass_rate, slice:denial/pass_rate
+exit_code=1, expected=1
+
+[v2_gate_slice_regression] python -m lab9.gate --pr reports/eval_slice_regression.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml --base-spec config/metric_spec_v2.yaml
+gate: PR E-slice_regression-20261118-5fa3 vs main E-swarm-20261118-5fa3 · eval set 5fa347e61392
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9357   {"min": 0.9, "no_significant_drop": true} Δ -0.043 CI [-0.121, +0.029] ok
+  proposal_amount_correct 0.9357   {"min": 0.95}                                                         warn
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              0.9357   {"min": 0.85, "no_significant_drop": true} Δ -0.043 CI [-0.121, +0.029] ok
+  pass_hat_5             0.8929   {"min": 0.8}                                                          ok
+  cost_per_success       52.9053  {"max_increase": 0.1}                                                 ok
+  slice:money_movement/pass_rate   0.85     min=0.9   Δ -0.150 CI [-0.300, +0.000]        BLOCK
+  slice:adversarial/pass_rate      0.9142857142857144 min=0.9   Δ -0.057 CI [-0.186, +0.057]        ok
+  slice:denial/pass_rate           1.0      min=0.9   Δ +0.055 CI [+0.018, +0.109]        ok
+exit 1 — blocked: slice:money_movement/pass_rate
+exit_code=1, expected=1
+
+[v2_gate_flaky_regression] python -m lab9.gate --pr reports/eval_flaky_regression_v2.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml --base-spec config/metric_spec_v2.yaml
+gate: PR E-flaky_regression-20261118-5fa3 vs main E-swarm-20261118-5fa3 · eval set 5fa347e61392
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9643   {"min": 0.9, "no_significant_drop": true} Δ -0.014 CI [-0.050, +0.021] ok
+  proposal_amount_correct 0.9143   {"min": 0.95}                                                         warn
+  reply_amount_matches_ledger 1.0      {"min": 1.0, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              0.9143   {"min": 0.85, "no_significant_drop": true} Δ -0.064 CI [-0.114, -0.014] BLOCK
+  pass_hat_5             0.5714   {"min": 0.8}                                                          BLOCK
+  cost_per_success       54.1453  {"max_increase": 0.1}                                                 ok
+  slice:money_movement/pass_rate   0.8666666666666667 min=0.9   Δ -0.133 CI [-0.183, -0.083]        BLOCK
+  slice:adversarial/pass_rate      0.9285714285714286 min=0.9   Δ -0.043 CI [-0.114, +0.029]        ok
+  slice:denial/pass_rate           0.9272727272727272 min=0.9   Δ -0.018 CI [-0.109, +0.073]        ok
+exit 1 — blocked: pass_rate, pass_hat_5, slice:money_movement/pass_rate
+exit_code=1, expected=1

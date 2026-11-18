@@ -47,7 +47,8 @@ def test_invalid_bootstrap_options_are_rejected_even_for_identical_samples(optio
 
 def test_gate_decision_uses_the_confidence_selected_in_the_spec():
     from lab9.gate import check
-    base = {"manifest": {"eval_set_sha": "same"}, "metrics": {"quality": 1.0},
+    base = {"manifest": {"eval_set_sha": "same", "items": 5, "seeds": [11]},
+            "metrics": {"quality": 1.0}, "evaluator_failures": [],
             "rows": [{"item_id": f"E-{i}", "seed": 11, "quality": True} for i in range(5)]}
     pr = copy.deepcopy(base)
     pr["metrics"]["quality"] = 0.6
